@@ -1,4 +1,6 @@
 ext.signAPK= {->
+ signingConfigs {
+        release_key {
     try {
         def details = getStoreDetails()
         keyAlias details.alias
@@ -12,7 +14,8 @@ ext.signAPK= {->
     } catch (IllegalArgumentException r) {
         logger.error('Please fille the data in store_details.json')
     }
-
+}
+}
 }
 def getStoreDetails() throws FileNotFoundException {
     def jsonFile = file(rootDir.path + java.io.File.separator + "store_details.json")
