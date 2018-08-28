@@ -1,22 +1,21 @@
-ext.signAPK= {->
- signingConfigs {
-        release_key {
-    try {
-        def details = getStoreDetails()
-        keyAlias details.alias
-        keyPassword details.k_password
-        storeFile file(details.path)
-        storePassword details.s_password
-        v1SigningEnabled = true
-        v2SigningEnabled = true
-    } catch (FileNotFoundException e) {
-        new File("$rootDir/$fileName").text = """ $error_template"""
-    } catch (IllegalArgumentException r) {
-        logger.error('Please fille the data in store_details.json')
+ext.signingConfigs {
+    release_key {
+        try {
+            def details = getStoreDetails()
+            keyAlias details.alias
+            keyPassword details.k_password
+            storeFile file(details.path)
+            storePassword details.s_password
+            v1SigningEnabled = true
+            v2SigningEnabled = true
+        } catch (FileNotFoundException e) {
+            new File("$rootDir/$fileName").text = """ $error_template"""
+        } catch (IllegalArgumentException r) {
+            logger.error('Please fille the data in store_details.json')
+        }
     }
 }
-}
-}
+
 def getStoreDetails() throws FileNotFoundException {
     def jsonFile = file(rootDir.path + java.io.File.separator + "store_details.json")
     def parsedJson = new groovy.json.JsonSlurper().parseText(jsonFile.text)
