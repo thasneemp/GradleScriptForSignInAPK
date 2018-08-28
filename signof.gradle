@@ -1,4 +1,4 @@
-def signAPK() {
+ext.signAPK= {->
     try {
         def details = getStoreDetails()
         keyAlias details.alias
